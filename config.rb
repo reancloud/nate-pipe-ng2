@@ -70,12 +70,12 @@ set :server_test_tool, :inspec
 
 # What servers should be tested by inspec?
 #  - HCAP DevSecOps supports a simple syntax for declaring servers to be tested.
-server :myserver,
-       protocol: "ssh",
-       host: "myserver",
-       user: "ec2-user",
-       keys: "target/ssh-keys/myserver-key.pem",
-       test_profile: "myserver"
+#server :myserver,
+#       protocol: "ssh",
+#       host: "myserver",
+#       user: "ec2-user",
+#       keys: "target/ssh-keys/myserver-key.pem",
+#       test_profile: "myserver"
 #      ^^^
 #      HCAP DevSecOps will automatically run the inspec profile
 #      located in `test/MY-TEST-PROFILE`
@@ -112,13 +112,13 @@ server :myserver,
 #    based on any logic that you can define using Ruby.
 #  - HCAP DevSecOps allows you to "lazily" declare the values of inspec attributes,
 #    so that they are not calculated until the exact time that they are needed.
-set :myserver_inspec_inputs do
-  {
-    'environment' => fetch(:pipeline_env),
-    'project' => fetch(:application),
-    'prefix' => "#{fetch(:pipeline_env)}-#{fetch(:application)}"
-  }
-end
+#set :myserver_inspec_inputs do
+#  {
+#    'environment' => fetch(:pipeline_env),
+#    'project' => fetch(:application),
+#    'prefix' => "#{fetch(:pipeline_env)}-#{fetch(:application)}"
+#  }
+#end
 
 ##############################################################################################
 # APPLICATION TESTING
@@ -130,7 +130,7 @@ end
 #  - HCAP DevSecOps supports a simple syntax for declaring websites to be tested by HCAP Test.
 #  - HCAP DevSecOps will default to running all declared functional tests and load tests against
 #    all declared websites, unless you specifically declare which tests to run against which websites.
-website :mysite, protocol: :https, host: "www.example.com", path: ""
+website :mysite, protocol: :http, host: reandeploy_output('app-myapp.json','ec2_dns'), path: ""
 
 # A list of HCAP Test functional tests to be run, with a minimal number of options required.
 #  - HCAP DevSecOps automatically applies default test execution options to each test in the list below,
@@ -138,12 +138,12 @@ website :mysite, protocol: :https, host: "www.example.com", path: ""
 #  - HCAP DevSecOps automatically loads Git credentials from the GIT_USER and GIT_PASS environment
 #    variables, unless you specifically provide alternative values.
 set :functional_tests, [
-  {
-    command_to_run_test: "mvn test -Dcucumber.options=\"--tags @app_test\"",
-    git_repository_url: "",
-    chrome: "72",
-    firefox: "63"
-  }
+#  {
+#    command_to_run_test: "mvn test -Dcucumber.options=\"--tags @app_test\"",
+#    git_repository_url: "",
+#    chrome: "72",
+#    firefox: "63"
+#  }
 ]
 
 # A list of HCAP Test load tests to be run, with a minimal number of options required.
@@ -152,23 +152,23 @@ set :functional_tests, [
 #  - HCAP DevSecOps automatically loads Git credentials from the GIT_USER and GIT_PASS environment
 #    variables, unless you specifically provide alternative values.
 set :load_tests, [
-  {
-    command_to_run_test: "mvn test -Dcucumber.options=\"--tags @app_test\"",
-    git_repository_url: "",
-    chrome: "72",
-    firefox: "63"
-  }
+#  {
+#    command_to_run_test: "mvn test -Dcucumber.options=\"--tags @app_test\"",
+#    git_repository_url: "",
+#    chrome: "72",
+#    firefox: "63"
+#  }
 ]
 
 # A list of HCAP Test security tests to be run, with a minimal number of options required.
 #  - HCAP DevSecOps automatically applies default test execution options to each test in the list below,
 #    unless you specifically provide an alternative value.
 set :security_tests, [
-  {
-    username_field_xpath: "//input[@id='login']",
-    password_field_xpath: "//input[@id='password']",
-    submit_button_xpath: "//input[@id='submit']"
-  }
+#  {
+#    username_field_xpath: "//input[@id='login']",
+#    password_field_xpath: "//input[@id='password']",
+#    submit_button_xpath: "//input[@id='submit']"
+#  }
 ]
 
 ##############################################################################################
@@ -188,5 +188,12 @@ set :url_test_tool, :inspec
 #    by specifying a sites: option, with an array of site names.
 #
 set :url_tests, [
-  { url: "/logout" },
+  { url: "/" },
 ]
+
+##############################################################################################
+# Modification from Noel
+##############################################################################################
+set :skip_functional_tests, true
+set :skip_load_tests, true
+set :skip_security_tests, true
