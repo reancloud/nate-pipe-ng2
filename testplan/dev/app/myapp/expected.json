@@ -26,7 +26,7 @@
         "myip": {
         "type": "ingress",
         "cidr_blocks": [
-          "108.51.34.3/32"
+          "107.50.35.8/32"
         ],
         "from_port": 22,
         "to_port": 22,
@@ -36,7 +36,7 @@
     "aws_instance": {
       "prod-web2-ec2-app": {
         "name": "prod-web2-ec2-app",
-        "instance_type": "t2.nano",
+        "instance_type": "t2.micro",
         "ami": "ami-0519a84a46d718361",
         "instance_initiated_shutdown_behavior": "stop",
         "security_groups": "prod-web2-pub-sg",
@@ -48,18 +48,6 @@
             "Name": "prod-web2-ec2-app"
         }
       }
-    }
-  },
-  "output": {
-    "aws_security_group": {
-      "prod-web2-pub-sg": "sg-0250ba939a34a1fb8"
-    },
-    "aws_security_group_rule": {
-      "officeip": "sg-0250ba939a34a1fb8",
-      "myip":"sg-0250ba939a34a1fb8"
-    },
-    "aws_instance": {
-      "prod-web2-ec2-app": "i-06121fa47fd74a7a1"
     }
   }
 }
